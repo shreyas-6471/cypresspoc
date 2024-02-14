@@ -5,8 +5,76 @@ describe('My First Test', function()  {
             this.data = data;
         });
     });
+    it('API test',()=>{
+        cy.request({
+            method: 'GET', // or 'POST', 'PUT', 'DELETE', etc., depending on the API requirement
+            url: 'https://yourapi.endpoint/resource', // The URL of the API endpoint
+            headers: {
+              'Header-Name': 'Header Value', // Replace 'Header-Name' and 'Header Value' with actual header names and values required by the API
+              'Authorization': 'Bearer YOUR_TOKEN', // Example for Authorization header
+              // Add any other headers required by the API
+            },
+            // If you're making a POST or PUT request, you may also need to include a body:
+            // body: {
+            //   key: 'value'
+            // }
+          }).then((response) => {
+            // Handle the response data
+            expect(response.status).to.eq(200); // Example assertion to check status code
+            // You can add more assertions here based on your test requirements
+          });
+          
+    })
+    it('My FirstTest case',function() {
+        cy.fixture("example").then(function(data)  {
+            this.data = data;
+        }); 
+        cy.visit("https://rahulshettyacademy.com/angularAppdemo/");
+     
+        cy.intercept('GET','https://rahulshettyacademy.com/Library/GetBook.php?AuthorName=shetty',
+        (req)=>
+        {
+        req.url="https://rahulshettyacademy.com/Library/GetBook.php?AuthorName=malhotra"
+     
+        req.continue((res)=>
+        {
+           // expect(res.statusCode).to.equal(403)
+        })
+     }
+     ).as("dummyUrl")
+     
+     cy.get("button[class='btn btn-primary']").click()
+     cy.wait('@dummyUrl')
+     
+    })
+    
+    it('My FirstTest case',function() {
+ 
+        cy.visit("https://rahulshettyacademy.com/angularAppdemo/");
+        cy.intercept({
+            method : 'GET',
+            url : 'https://rahulshettyacademy.com/Library/GetBook.php?AuthorName=shetty'
+        },
+     
+         {
+             statusCode : 200,
+             body : [{
+                    "book_name": "RestAssured with Java",
+                    "isbn": "RSU",
+                    "aisle": "2301"    }]
+              
+         }).as('bookretrievals')
+        
 
-    it('Does not do much!', function()  {
+     
+     cy.get("button[class='btn btn-primary']").click()
+     cy.wait('@bookretrievals').then(({request,response})=>{
+        cy.get('tr').should('have.length',response.body.length+1)
+     })
+     
+    })
+    it.only('Does not do much!', function()  {
+        this.name="Shreyas"
         Cypress.config('defaultCommandTimeout',8000)
         const home=new homePage()
         cy.visit(Cypress.env("url")+'/angularpractice/')
@@ -18,6 +86,7 @@ describe('My First Test', function()  {
            home.getName("Name").type(this.data.name);
            home.getEmail("Email").type(this.data.email);
             cy.wait(2000)
+            cy.log(this.name)
             cy.get('#inlineRadio3').should('be.disabled')
             cy.get('#inlineRadio3').should('have.attr','value',"option3")
             cy.get('li.nav-item a').contains("Shop").click()
@@ -71,7 +140,7 @@ describe('My First Test', function()  {
            cy.get(".checkbox.checkbox-primary").find('input').click({force:true})
            cy.contains("Purchase").click()
            cy.get('.alert').invoke('text').then((text)=>{
-            expect(text).to.have.string('success')
+            expect(text).to.have.string('Success')
            })
         })
     });
