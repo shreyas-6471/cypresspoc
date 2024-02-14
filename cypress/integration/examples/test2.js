@@ -26,7 +26,7 @@ describe('My First Test', function()  {
                 cy.addProduct(this.data.products[i])
             }
             this.curtotal=0
-           cy.get(".nav-link.btn.btn-primary").click({force:true})
+          cy.get(".nav-link.btn.btn-primary").click({force:true})
            cy.get('.table.table-hover tbody tr').each((el,idx,list) => {
             cy.wrap(el).find('td').eq(3).invoke('text').then((text) => {
                 if (text === "Total") {
