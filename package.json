@@ -12,6 +12,7 @@
     "cypress": "^13.6.4"
   },
   "dependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.1",
     "cypress-iframe": "^1.0.1"
   }
 }
