@@ -48,8 +48,7 @@ describe('My First Test', function()  {
      
     })
     
-    it('My FirstTest case',function() {
- 
+    it.only('My FirstTest case',function() {
         cy.visit("https://rahulshettyacademy.com/angularAppdemo/");
         cy.intercept({
             method : 'GET',
@@ -57,7 +56,7 @@ describe('My First Test', function()  {
         },
      
          {
-             statusCode : 200,
+             statusCode : 202,
              body : [{
                     "book_name": "RestAssured with Java",
                     "isbn": "RSU",
@@ -69,11 +68,13 @@ describe('My First Test', function()  {
      
      cy.get("button[class='btn btn-primary']").click()
      cy.wait('@bookretrievals').then(({request,response})=>{
+        cy.log(response)
+        console.log(response.body)
         cy.get('tr').should('have.length',response.body.length+1)
      })
      
     })
-    it.only('Does not do much!', function()  {
+    it('Does not do much!', function()  {
         this.name="Shreyas"
         Cypress.config('defaultCommandTimeout',8000)
         const home=new homePage()
