@@ -47,7 +47,6 @@ describe('My First Test', function()  {
      cy.wait('@dummyUrl')
      
     })
-    
     it.only('My FirstTest case',function() {
         cy.visit("https://rahulshettyacademy.com/angularAppdemo/");
         cy.intercept({
@@ -63,16 +62,12 @@ describe('My First Test', function()  {
                     "aisle": "2301"    }]
               
          }).as('bookretrievals')
-        
-
-     
      cy.get("button[class='btn btn-primary']").click()
      cy.wait('@bookretrievals').then(({request,response})=>{
         cy.log(response)
         console.log(response.body)
         cy.get('tr').should('have.length',response.body.length+1)
      })
-     
     })
     it('Does not do much!', function()  {
         this.name="Shreyas"
@@ -128,7 +123,6 @@ describe('My First Test', function()  {
                 }
             });
         });
-        
            cy.contains("Checkout").click()
            cy.get("#country").type("India",{force:true})
            cy.get(".suggestions>ul>li>a").each((el,idx,list)=>{
