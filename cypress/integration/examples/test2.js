@@ -23,7 +23,6 @@ describe('My First Test', function()  {
             expect(response.status).to.eq(200); // Example assertion to check status code
             // You can add more assertions here based on your test requirements
           });
-          
     })
     it('My FirstTest case',function() {
         cy.fixture("example").then(function(data)  {
@@ -53,7 +52,6 @@ describe('My First Test', function()  {
             method : 'GET',
             url : 'https://rahulshettyacademy.com/Library/GetBook.php?AuthorName=shetty'
         },
-     
          {
              statusCode : 202,
              body : [{
